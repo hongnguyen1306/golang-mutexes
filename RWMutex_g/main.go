@@ -7,30 +7,30 @@ import (
 )
 
 type game struct {
-	mu    sync.RWMutex
+	mutex sync.RWMutex
 	score int
 }
 
 func (g *game) GetScore() {
-	g.mu.RLock()
+	g.mutex.RLock()
 
 	for i := 0; i < 4; i++ {
 		fmt.Println("Điểm số:", g.score)
 	}
 
-	g.mu.RUnlock()
+	g.mutex.RUnlock()
 
 }
 
 func (g *game) IncreaseScore() {
 	// Khóa khóa rmutex trước khi tăng biến 'score'
-	g.mu.Lock()
+	g.mutex.Lock()
 	fmt.Println("write lock")
 	// Tăng biến 'score'
 	g.score++
 
 	// Mở khóa khóa rmutex sau khi tăng biến 'score'
-	g.mu.Unlock()
+	g.mutex.Unlock()
 	fmt.Println("write unlocking")
 
 }
